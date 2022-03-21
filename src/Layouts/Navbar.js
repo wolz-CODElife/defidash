@@ -1,15 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { IconProfile } from '../services/icons'
+import { IconCheckCircle, IconProfile } from '../services/icons'
 
-const Navbar = () => {
+const Navbar = ({connected}) => {
   return (
       <NavContainer>
           <Link to="/" className="brand">
-              <h1>DefiDashboard</h1>
+              <h1>DefiDash</h1>
           </Link>
-          <Link to='/connectwallet' className='userprofile'><IconProfile /></Link>
+          {!connected?
+            <Link to='/connectwallet' className='userprofile'><IconProfile /></Link>
+          :
+            <span className='userconnected'>Connected <IconCheckCircle /></span>
+          }
       </NavContainer>
   )
 }
@@ -29,7 +33,7 @@ const NavContainer = styled.div`
     background: #FFFFFF;
 
     .brand {
-        margin: 10px 20px;
+        margin: 10px 30px;
         text-decoration: none;
         color: #5A66F9;
 
@@ -39,11 +43,25 @@ const NavContainer = styled.div`
         }
     }
     .userprofile {
-        margin: 10px 20px;
+        margin: 10px 30px;
         svg {
             width: 40px;
             height: 40px;
             fill: #D7D9F2;
+        }
+    }
+
+    .userconnected {
+        background: #f1f3f5;
+        color: #5EBA7D;
+        padding: 10px 15px;
+        margin: 10px 30px;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+
+        svg {
+            margin-left: 15px;
         }
     }
 `

@@ -4,6 +4,18 @@
   font-family: 'Poppins', sans-serif;
 }
 
+*::-webkit-scrollbar {
+  width: 8px;
+  background: #7179e654;
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #555ECD;
+  border-radius: 8px;
+}
+
 body {
   margin: 0;
+  background: #f1f3f5;
 }

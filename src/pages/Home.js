@@ -1,10 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import { IconArrowRightThin, IconCheckCircle, IconLink } from '../services/icons'
 
-const Home = () => {
+const Home = ({connected}) => {
   return (
     <HomeContainer>
-      Home
+      <div className="board">
+        <div className='content'>
+          <div className='text'>
+            <h1>The best defi dashboard analytics platform</h1>
+            <h4>Connect wallet and track your cross-chain exchanges!</h4>
+
+            {!connected?
+              <div className='connectedlinks'>
+                <Link to='/connectwallet' className='connect_link'>Connect Wallet <IconLink /></Link>
+              </div>
+              :
+              <div className='connectedlinks'>
+                <span className='userconnected'>Connected <IconCheckCircle /></span>
+                <Link to='/dashboard' className='connect_link'>Go To Dashboard <IconArrowRightThin /></Link>
+              </div>
+            }
+          </div>
+          <div className="hero_img">
+            <img src="https://i.postimg.cc/KjLTQj9z/Revenue-bro.png" alt="illsutration" />
+          </div>
+        </div>
+      </div>
     </HomeContainer>
   )
 }
@@ -12,7 +35,85 @@ const Home = () => {
 export default Home
 
 const HomeContainer = styled.div`
-    background: #FFFFFF;
-    padding: 80px 0px;
+    padding: 100px;
+
+    .board {
+      background: #555ECD;
+      height: max-content;
+      position: relative;
+      border-radius: 14px;
+
+      .content {
+        background-image: url('https://i.postimg.cc/mkkknqXn/image.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 32px;
+        color: #FFFFFF;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        
+        .text {
+          .connect_link{
+            background: #F7FAFA60;
+            padding: 10px 15px;
+            width: max-content;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #000000;
+            transition: 0.4s ease;
+            border-radius: 2px;
+
+            svg{
+              width: 20px;
+              height: 20px;
+              margin-left: 15px;
+            }
+
+            &:hover {
+              background: #000000;
+              color: #FFFFFF;
+            }
+          }       
+
+          .connectedlinks {
+            margin-top: 100px;
+            display: flex;
+
+            .userconnected {
+              background: #f1f3f5;
+              color: #5EBA7D;
+              padding: 10px 15px;
+              border-radius: 30px;
+              display: flex;
+              align-items: center;
+              width: max-content;
+              align-items: center;
+              margin-right: 20px;
+              
+              svg {
+                margin-left: 15px;
+              }
+            }
+          }
+        }
+
+        .hero_img {
+          background: #F7FAFA60;
+          width: 300px;
+          height: 300px;
+          padding: 15px;
+          border-radius: 10px;
+          
+          img {
+            width: 330px;
+            object-fit: contain;
+            background: #FFFFFF;
+            border-radius: 10px;
+          }
+        }
+      }
+    }
 
 `

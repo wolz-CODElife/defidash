@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-const ConnectWallet = () => {
+const ConnectWallet = ({connected, setConnected}) => {
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if(connected){
+            navigate("/dashboard")        
+        }
+    }, [connected, navigate])
+
+    const handleWalletConnection = () => {
+        localStorage.setItem("connected", 'true')
+        setConnected(true)
+    }
   return (
     <SigninForm>
         <div className="title">
@@ -9,15 +22,15 @@ const ConnectWallet = () => {
             <p>Connect your wallet and know everything about NFT👉</p>
         </div>
         <div className="wallets">
-            <button>
+            <button onClick={handleWalletConnection}>
                 <img src="https://i.postimg.cc/C1v3V2Zp/image.png" alt="Meta Mask" />
                 <h2>MetaMask</h2>
             </button>
-            <button>
+            <button onClick={handleWalletConnection}>
                 <img src="https://i.postimg.cc/tChHs2wW/image.png" alt="Meta Mask" />
                 <h2>Wallet Connect</h2>
             </button>
-            <button>
+            <button onClick={handleWalletConnection}>
                 <img src="https://i.postimg.cc/PxBBxwMS/image.png" alt="Meta Mask" />
                 <h2>Coinbase Wallet</h2>
             </button>
@@ -30,11 +43,10 @@ const ConnectWallet = () => {
 export default ConnectWallet
 
 const SigninForm = styled.div`
-    background: #FFFFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px 0px;
+    padding: 100px;
 
     .title {
         text-align: center;
