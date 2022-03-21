@@ -122,10 +122,13 @@ const DashContainer = styled.div`
 
     .tabs {
       margin: 30px 0px;
-
+      box-shadow: 2px 2px 20px #D7D9F2C0;
+      border-radius: 10px;
+      
       .head {
         background: #FFFFFF;
-
+        border-radius: 10px 10px 0px 0px;
+        
         button {
           border: none;
           outline: none;
@@ -142,9 +145,11 @@ const DashContainer = styled.div`
           }
         }
       }
-
+      
       .body {
+        background: #FFFFFFA5;
         padding: 20px;
+        border-radius: 0px 0px 10px 10px;
       }
     }
 `
