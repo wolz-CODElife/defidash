@@ -34,7 +34,7 @@ const SigninForm = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 60px 0px;
+    padding: 80px 0px;
 
     .title {
         text-align: center;
