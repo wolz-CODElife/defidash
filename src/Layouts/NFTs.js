@@ -104,6 +104,14 @@ const NFTContainer = styled.div`
         padding-bottom: 10px;
         box-shadow: 2px 2px 10px #D7D9F240;
 
+        @media screen and (max-width: 768px){
+          width: 40%;
+        }
+
+        @media screen and (max-width: 490px){
+          width: 80%;
+        }
+
         img {
           width: 100%;
           object-fit: contain;

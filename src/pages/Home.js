@@ -37,6 +37,10 @@ export default Home
 const HomeContainer = styled.div`
     padding: 100px;
 
+    @media screen and (max-width: 656px) {
+      padding: 100px 30px;
+    }
+
     .board {
       background: #555ECD;
       height: max-content;
@@ -52,6 +56,10 @@ const HomeContainer = styled.div`
         display: flex;
         justify-content: space-around;
         align-items: center;
+
+        @media screen and (max-width: 1021px) {
+          flex-direction: column-reverse;
+        }
         
         .text {
           .connect_link{
@@ -81,6 +89,15 @@ const HomeContainer = styled.div`
             margin-top: 100px;
             display: flex;
 
+            @media screen and (max-width: 1021px) {
+              justify-content: space-between;
+            }
+            
+            @media screen and (max-width: 500px) {
+              flex-direction: column;
+              align-items: center;
+            }
+
             .userconnected {
               background: #f1f3f5;
               color: #5EBA7D;
@@ -91,6 +108,10 @@ const HomeContainer = styled.div`
               width: max-content;
               align-items: center;
               margin-right: 20px;
+            
+              @media screen and (max-width: 500px) {
+                margin-bottom: 20px;
+              }
               
               svg {
                 margin-left: 15px;
@@ -102,12 +123,17 @@ const HomeContainer = styled.div`
         .hero_img {
           background: #F7FAFA60;
           width: 300px;
-          height: 300px;
+          max-width: 80%;
           padding: 15px;
           border-radius: 10px;
+
+          @media screen and (max-width: 1021px) {
+            margin: 30px 0px;
+          }
           
           img {
             width: 330px;
+            max-width: 100%;
             object-fit: contain;
             background: #FFFFFF;
             border-radius: 10px;

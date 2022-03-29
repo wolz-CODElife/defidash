@@ -48,6 +48,14 @@ const SigninForm = styled.div`
     align-items: center;
     padding: 100px;
 
+    @media screen and (max-width: 648px) {
+        padding: 100px 50px;
+    }
+
+    @media screen and (max-width: 420px) {
+        padding: 100px 25px;
+    }
+
     .title {
         text-align: center;
 
@@ -75,10 +83,27 @@ const SigninForm = styled.div`
             cursor: pointer;
             transition: all ease 0.4s;
 
+            @media screen and (max-width: 550px) {
+                width: 350px;
+                padding: 15px;
+            }
+
+            @media screen and (max-width: 410px) {
+                width: 250px;
+                h2 {
+                    font-size: 15px;
+                }
+            }
+
             img {
                 width: 48px;
                 height: 48px;
                 margin: 0px 48px;
+
+                @media screen and (max-width: 550px) {
+                    margin: 0px;
+                    margin-right: 20px;
+                }
             }
 
             &:hover {
@@ -100,19 +125,4 @@ const SigninForm = styled.div`
             }
         }
     }
-
-    
-    // ==============================================================
-    // Media-query
-    // ==============================================================
-    @media only screen and (min-width: 329px){
-        display: none;
-    }
-    @media only screen and (min-width: 768px){
-        display: flex;
-    }
-    @media only screen and  (min-width: 1200px){
-        display: flex;
-    }
-
 `

@@ -41,6 +41,13 @@ const NavContainer = styled.div`
             font-size: 32px;
             font-weight: 700;
         }
+
+        @media screen and (max-width: 498px) {
+            margin-right: 15px;
+            h1 {
+                transform: scale(0.8);
+            }
+        }
     }
     .userprofile {
         margin: 10px 30px;
@@ -62,6 +69,10 @@ const NavContainer = styled.div`
 
         svg {
             margin-left: 15px;
+        }
+
+        @media screen and (max-width: 498px) {
+            transform: scale(0.8);
         }
     }
 `

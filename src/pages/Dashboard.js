@@ -69,18 +69,31 @@ export default Dashboard
 
 const DashContainer = styled.div`
     padding: 100px;
+
+    @media screen and (max-width: 768px) {
+      padding: 100px 50px;
+    }
+
+    @media screen and (max-width: 498px) {
+      padding: 100px 25px;
+    }
     
     .overview {
       display: flex;
       align-items: center;
       justify-content: space-between;
 
+      
       button {
         background: none;
         border: 1px solid #FF0000A6;
         padding: 8px 15px;
         border-radius: 6px;
         cursor: pointer;
+        
+        @media screen and (max-width: 498px) {
+          transform: scale(0.8);  
+        }
 
         &:hover {
           background: #FF0000A6;
