@@ -1,3 +1,3 @@
-export const getToken = () => {
-    // 
-}
+export const APP_ID = "YOUR_MORALIS_APP_ID"
+export const SERVER_URL = "YOUR_MORALIS_SERVER_URL"
+

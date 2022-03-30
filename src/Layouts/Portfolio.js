@@ -10,23 +10,27 @@ const Portfolio = () => {
           <LogosEthereum /> Ethereum Mainnet
         </div>
         <table>
-          <tr>
-            <th>Token</th>
-            <th>Balance</th>
-            <th>USD Value</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Balance</th>
+              <th>USD Value</th>
+            </tr>
+          </thead>
 
           {/* Table body */}
-          <tr>
-            <td>Eth</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
-          <tr>
-            <td>Eth</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>Eth</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+            <tr>
+              <td>Eth</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div className="table_responsive">
@@ -34,23 +38,27 @@ const Portfolio = () => {
           <LogosMatic /> Polygon
         </div>
         <table>
-          <tr>
-            <th>Token</th>
-            <th>Balance</th>
-            <th>USD Value</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Balance</th>
+              <th>USD Value</th>
+            </tr>
+          </thead>
 
           {/* Table body */}
-          <tr>
-            <td>MATIC</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
-          <tr>
-            <td>WETH</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>MATIC</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+            <tr>
+              <td>WETH</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div className="table_responsive">
@@ -58,28 +66,32 @@ const Portfolio = () => {
           <LogosBSC /> Binance Smart Chain
         </div>
         <table>
-          <tr>
-            <th>Token</th>
-            <th>Balance</th>
-            <th>USD Value</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Balance</th>
+              <th>USD Value</th>
+            </tr>
+          </thead>
 
           {/* Table body */}
-          <tr>
-            <td>BNB</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
-          <tr>
-            <td>Cake</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
-          <tr>
-            <td>REEF</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>BNB</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+            <tr>
+              <td>Cake</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+            <tr>
+              <td>REEF</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div className="table_responsive">
@@ -87,23 +99,27 @@ const Portfolio = () => {
           <LogosAvalanche /> Avalanche Mainnet
         </div>
         <table>
-          <tr>
-            <th>Token</th>
-            <th>Balance</th>
-            <th>USD Value</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Balance</th>
+              <th>USD Value</th>
+            </tr>
+          </thead>
 
           {/* Table body */}
-          <tr>
-            <td>AVAX</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
-          <tr>
-            <td>JOE</td>
-            <td>0.03</td>
-            <td>$110.86</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>AVAX</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+            <tr>
+              <td>JOE</td>
+              <td>0.03</td>
+              <td>$110.86</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </PortfolioContainer>
