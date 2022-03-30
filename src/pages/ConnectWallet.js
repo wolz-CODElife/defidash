@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useMoralis } from "react-moralis";
 
 const ConnectWallet = ({connected, setConnected}) => {
     const navigate = useNavigate()
+    const { authenticate, isAuthenticated} = useMoralis();
 
     useEffect(() => {
         if(connected){
@@ -11,9 +13,32 @@ const ConnectWallet = ({connected, setConnected}) => {
         }
     }, [connected, navigate])
 
-    const handleWalletConnection = () => {
-        localStorage.setItem("connected", 'true')
-        setConnected(true)
+    const HandleMetaMask = () => {
+        if (!isAuthenticated) {
+            authenticate({signingMessage: "Log in using Moralis" })
+            .then((user) => {
+                if(user){
+                    setConnected(true)
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+    }
+
+    const HandleWalletConnect = () => {
+        if (!isAuthenticated) {
+            authenticate({signingMessage: "Log in using Moralis", provider: "walletconnect", chainId: 56 })
+            .then((user) => {
+                if(user) {
+                    setConnected(true)
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
     }
   return (
     <SigninForm>
@@ -22,17 +47,13 @@ const ConnectWallet = ({connected, setConnected}) => {
             <p>Connect your wallet and know everything about NFT👉</p>
         </div>
         <div className="wallets">
-            <button onClick={handleWalletConnection}>
+            <button onClick={HandleMetaMask}>
                 <img src="https://i.postimg.cc/C1v3V2Zp/image.png" alt="Meta Mask" />
                 <h2>MetaMask</h2>
             </button>
-            <button onClick={handleWalletConnection}>
+            <button onClick={HandleWalletConnect}>
                 <img src="https://i.postimg.cc/tChHs2wW/image.png" alt="Meta Mask" />
                 <h2>Wallet Connect</h2>
-            </button>
-            <button onClick={handleWalletConnection}>
-                <img src="https://i.postimg.cc/PxBBxwMS/image.png" alt="Meta Mask" />
-                <h2>Coinbase Wallet</h2>
             </button>
             <a href="https://metamask.io/download" target="_blank" rel="noopener noreferrer">I don't have a wallet</a>
         </div>

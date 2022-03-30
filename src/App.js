@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from './Layouts/Navbar'
 import PageRoutes from './routes/Routes'
+import { useMoralis } from "react-moralis";
 
 const App = () => {
-  const [connected, setConnected] = useState(true)
+  const [connected, setConnected] = useState(false)
+  const {isAuthenticated} = useMoralis();
 
   useEffect(() => {
-    if(localStorage.getItem("connected") === 'true') {
+    if(isAuthenticated) {
       setConnected(true)
     }
     else{
       setConnected(false)
     }
-  }, [])
+  }, [isAuthenticated])
   return (
     <Router>
       <Navbar connected={connected} />

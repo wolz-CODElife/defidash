@@ -1,41 +1,101 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useMoralisWeb3Api, useMoralis } from "react-moralis";
+import { APP_ID, SERVER_URL } from '../services/MoralisConfig';
+import { IconCopy } from '../services/icons';
 
 const History = () => {
+  const Web3Api = useMoralisWeb3Api();
+  const { Moralis } = useMoralis()
+  const [transactions, setTransactions] = useState([])
+
+  useEffect(() => {
+    Moralis.start({serverUrl: SERVER_URL, appId: APP_ID})
+    fetchTransactionHistory()
+
+    // eslint-disable-next-line
+  }, [])
+
+  const fetchTransactionHistory = async () => {
+    let options = {
+      chain: "testnet",
+    }
+    Web3Api.account.getTransactions(options).then(transacts => {
+      if(transacts.result.length > 0) {
+        let newTransactions = []
+        transacts.result.map(transaction => {
+          newTransactions.push({
+            hash: transaction.hash,
+            sender: transaction.from_address,
+            receiver: transaction.to_address,
+            value: parseFloat(Moralis.Units.FromWei(transaction.value)).toFixed(3),
+            status: transaction.receipt_status,
+            timestamp: transaction.block_timestamp
+          })  
+        })
+        setTransactions(newTransactions)
+      }
+    })
+  };
+
+  const handleCopy = (address) => {
+    navigator.clipboard.writeText(address).then(() => {
+      alert('Copied address to clipboard!');
+    }, function(err) {
+      console.error('Async: Could not copy text: ', err);
+    });
+  }
+
+
   return (
     <HistoryContainer>
       <div className="table_responsive">
         <table>
-          <tr>
-            <th>Transaction Address</th>
-            <th>Sender Address</th>
-            <th>Receiver Address</th>
-            <th>Value</th>
-            <th>Timestamp</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Transaction Hash</th>
+              <th>Sender Address</th>
+              <th>Receiver Address</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
 
           {/* Table body */}
-          <tr>
-            <td>{"0x057Ec652A4F150f7FF94f089A38008f49a0DF88e".slice(0, 6) + "..." + "0x057Ec652A4F150f7FF94f089A38008f49a0DF88e".slice(-4)}</td>
-            <td>{"0xd4a3BebD824189481FC45363602b83C9c7e9cbDf".slice(0, 6) + "..." + "0xd4a3BebD824189481FC45363602b83C9c7e9cbDf".slice(-4)}</td>
-            <td>{"0x62AED87d21Ad0F3cdE4D147Fdcc9245401Af0044".slice(0, 6) + "..." + "0x62AED87d21Ad0F3cdE4D147Fdcc9245401Af0044".slice(-4)}</td>
-            <td>1ETH</td>
-            <td>{new Date('2021-04-02T10:07:54.000Z').toUTCString()}</td>
-          </tr>
-          <tr>
-            <td>{"0x057Ec652A4F150f7FF94f089A38008f49a0DF88e".slice(0, 6) + "..." + "0x057Ec652A4F150f7FF94f089A38008f49a0DF88e".slice(-4)}</td>
-            <td>{"0xd4a3BebD824189481FC45363602b83C9c7e9cbDf".slice(0, 6) + "..." + "0xd4a3BebD824189481FC45363602b83C9c7e9cbDf".slice(-4)}</td>
-            <td>{"0x62AED87d21Ad0F3cdE4D147Fdcc9245401Af0044".slice(0, 6) + "..." + "0x62AED87d21Ad0F3cdE4D147Fdcc9245401Af0044".slice(-4)}</td>
-            <td>1ETH</td>
-            <td>{new Date('2021-06-04T16:00:15').toUTCString()}</td>
-          </tr>
-          <tr>
-            <td>{"0x057Ec652A4F150f7FF94f089A38008f49a0DF88e".slice(0, 6) + "..." + "0x057Ec652A4F150f7FF94f089A38008f49a0DF88e".slice(-4)}</td>
-            <td>{"0xd4a3BebD824189481FC45363602b83C9c7e9cbDf".slice(0, 6) + "..." + "0xd4a3BebD824189481FC45363602b83C9c7e9cbDf".slice(-4)}</td>
-            <td>{"0x62AED87d21Ad0F3cdE4D147Fdcc9245401Af0044".slice(0, 6) + "..." + "0x62AED87d21Ad0F3cdE4D147Fdcc9245401Af0044".slice(-4)}</td>
-            <td>1ETH</td>
-            <td>{new Date('2021-12-10T17:04:09.775Z').toUTCString()}</td>
-          </tr>
+          <tbody>
+            {transactions.length > 0?
+              transactions.map(transaction => (
+                <tr key={transaction.hash + transaction.timestamp}>
+                  <td>
+                    <div className='trans_address'>
+                      {transaction.hash.slice(0, 6) + "..." + transaction.hash.slice(-4)} 
+                      <button onClick={() => handleCopy(transaction.hash)}><IconCopy /></button>
+                    </div>
+                  </td>
+                  <td>
+                    <div className='trans_address'>
+                      {transaction.sender.slice(0, 6) + "..." + transaction.sender.slice(-4)} 
+                      <button onClick={() => handleCopy(transaction.sender)}><IconCopy /></button>
+                    </div>
+                  </td>
+                  <td>
+                    <div className='trans_address'>
+                      {transaction.receiver.slice(0, 6) + "..." + transaction.receiver.slice(-4)} 
+                      <button onClick={() => handleCopy(transaction.receiver)}><IconCopy /></button>
+                    </div>
+                  </td>
+                  <td>{transaction.value} ETH</td>
+                  <td>{transaction.status === "1"? <span className='success'>Successful</span> : <span className='Pending'>Pending</span> }</td>
+                  <td>{new Date(transaction.timestamp).toUTCString()}</td>
+                </tr>
+              ))
+            :
+            <tr>
+              <td colSpan="6">No transactions found</td>
+            </tr>
+            }
+          </tbody>
         </table>
       </div>
     </HistoryContainer>
@@ -59,6 +119,31 @@ const HistoryContainer = styled.div`
       border: 1px solid #5A66F965;
       text-align: left;
       padding: 8px;
+      min-width: 150px;
+    }
+    
+    .trans_address {
+      display: flex;
+
+      button {
+        color: #8a8a8a;
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+    
+    .success {
+      font-size: 10px;
+      background: #00aa0060;
+      border-radius: 20px;
+      padding: 3px 7px;
     }
 
     tr:nth-child(even) {

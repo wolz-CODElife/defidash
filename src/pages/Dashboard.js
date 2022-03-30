@@ -2,23 +2,35 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import History from '../Layouts/History'
-import NFTs from '../Layouts/NFTs'
 import Portfolio from '../Layouts/Portfolio'
-import { IconCopy } from '../services/icons'
+import { IconCopy, LogosEthereum } from '../services/icons'
+import { useMoralisWeb3Api, useMoralis } from "react-moralis";
+import { APP_ID, SERVER_URL } from '../services/MoralisConfig'
+
 
 const Dashboard = ({connected, setConnected}) => {
-  const address = "0xcdx13p34xw4036q7870x9089p79y8y97"
+  const [address, setAddress] = useState("")
   const addressInput = useRef(null)
+  const [nativeBal, setNativeBal] = useState("")
   const [activeTab, setActiveTab] = useState('Portfolio')
-  const tabs = ["Portfolio", "NFTs", "History"]
+  const tabs = ["Portfolio", "History"]
   const navigate = useNavigate()
+  const Web3Api = useMoralisWeb3Api();
+  const { user, logout, Moralis } = useMoralis();
 
 
+  
   useEffect(() => {
+    Moralis.start({serverUrl: SERVER_URL, appId: APP_ID})
     if(!connected){
         navigate("/connectwallet")        
     }
-}, [connected, navigate])
+    else{
+      setAddress(user.get("ethAddress"))
+      fetchNativeBalances()
+    }
+    // eslint-disable-next-line
+}, [connected, navigate, user])
 
   const handleCopy = () => {
     let text = addressInput.current.value
@@ -29,18 +41,33 @@ const Dashboard = ({connected, setConnected}) => {
     });
   }
 
-  const handleDisconnectWallet = () => {
-    localStorage.removeItem('conntected')
-    setConnected(false)
+  const fetchNativeBalances = async () => {
+    let options = {
+      chain: "testnet"
+    }
+    Web3Api.account.getNativeBalance(options).then(balance => {
+      let newNativeBalance = parseFloat(Moralis.Units.FromWei(balance.balance)).toFixed(2)
+      setNativeBal(newNativeBalance)
+    })
+  };
+
+  const HandleDisconnectWallet = () => {
+    logout().then(() => {
+      setConnected(false)
+    })
   }
   return (
     <DashContainer>
-      <h1 className='overview'>Overview <button onClick={handleDisconnectWallet}>Disconnect Wallet</button></h1>
+      <h1 className='overview'>Overview <button onClick={HandleDisconnectWallet}>Disconnect Wallet</button></h1>
       <div className="header">
         <img src="https://i.postimg.cc/VsGFzCqn/image.png" alt="fakeqr" />
-        <span>{address.slice(0, 8) + "..." + address.slice(-4)}</span>
+        <span>{address.slice(0, 5) + "..." + address.slice(-4)}</span>
         <button onClick={handleCopy}><IconCopy /></button>
         <input type="hidden" defaultValue={address} ref={addressInput} />
+      </div>
+      <div className="sub_header">
+        <LogosEthereum />
+        <h1>{nativeBal || 0} ETH</h1>
       </div>
 
       <div className="tabs">
@@ -52,9 +79,6 @@ const Dashboard = ({connected, setConnected}) => {
         <div className="body">
           {activeTab === tabs[0] ?
             <Portfolio />
-            :
-            activeTab === tabs[1] ?
-            <NFTs />
             :
             <History />
           }
@@ -131,6 +155,13 @@ const DashContainer = styled.div`
           height: 15px;
         }
       }
+    }
+
+    .sub_header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0px;
     }
 
     .tabs {
