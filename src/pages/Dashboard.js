@@ -43,9 +43,10 @@ const Dashboard = ({connected, setConnected}) => {
 
   const fetchNativeBalances = async () => {
     let options = {
-      chain: "testnet"
+      chain: "ropsten"
     }
     Web3Api.account.getNativeBalance(options).then(balance => {
+      console.log(balance);
       let newNativeBalance = parseFloat(Moralis.Units.FromWei(balance.balance)).toFixed(2)
       setNativeBal(newNativeBalance)
     })

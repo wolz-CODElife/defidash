@@ -86,7 +86,7 @@ const History = () => {
                     </div>
                   </td>
                   <td>{transaction.value} ETH</td>
-                  <td>{transaction.status === "1"? <span className='success'>Successful</span> : <span className='Pending'>Pending</span> }</td>
+                  <td>{transaction.status === "1"? <span className='success'>Successful</span> : <span className='pending'>Pending</span> }</td>
                   <td>{new Date(transaction.timestamp).toUTCString()}</td>
                 </tr>
               ))
@@ -142,6 +142,13 @@ const HistoryContainer = styled.div`
     .success {
       font-size: 10px;
       background: #00aa0060;
+      border-radius: 20px;
+      padding: 3px 7px;
+    }
+    
+    .pending {
+      font-size: 10px;
+      background: #aaaa0060;
       border-radius: 20px;
       padding: 3px 7px;
     }
